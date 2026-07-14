@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>Love Letter</title>
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ffc0cb, #ffd6e8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Amiri', serif;
+    direction: rtl;
+  }
+
+  .envelope {
+    width: 320px;
+    height: 220px;
+    background: #fff;
+    position: relative;
+    cursor: pointer;
+    border-radius: 6px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+
+  .flap {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #ff9dbb;
+    clip-path: polygon(0 0, 50% 55%, 100% 0);
+    transform-origin: top;
+    transition: transform 1s ease;
+    z-index: 3;
+  }
+
+  .envelope.open .flap {
+    transform: rotateX(180deg);
+  }
+
+  .letter {
+    position: absolute;
+    bottom: -100%;
+    width: 100%;
+    height: 100%;
+    background: #fffafc;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: bottom 1s ease;
+    z-index: 2;
+  }
+
+  .envelope.open .letter {
+    bottom: 0;
+  }
+
+  #text {
+    font-size: 22px;
+    color: #b30059;
+    white-space: pre-wrap;
+    border-right: 2px solid #b30059;
+    padding-right: 8px;
+    min-height: 120px;
+  }
+
+  .hint {
+    position: absolute;
+    bottom: -40px;
+    width: 100%;
+    text-align: center;
+    color: #800040;
+    font-size: 14px;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="envelope" onclick="openLetter()">
+  <div class="flap"></div>
+  <div class="letter">
+    <div id="text"></div>
+  </div>
+  <div class="hint">اضغط لفتح الرسالة 💌</div>
+</div>
+
+<script>
+  const lyrics =
+    "وغلاوتك وحلاوتك والشوق اللي مالوهش حدود \n" +
+    "بصراحة بكل صراحة أنا مغرم بعينيكي السود💗💗💗";
+
+  let index = 0;
+  let opened = false;
+
+  function openLetter() {
+    if (opened) return;
+    opened = true;
+
+    document.querySelector(".envelope").classList.add("open");
+
+    setTimeout(() => {
+      const typing = setInterval(() => {
+        document.getElementById("text").textContent += lyrics[index];
+        index++;
+        if (index >= lyrics.length) clearInterval(typing);
+      }, 210);
+    }, 1000);
+  }
+</script>
+
+</body>
+</html>

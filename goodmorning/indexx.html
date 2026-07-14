@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Good Morning Noni</title>
+
+<!-- French luxury serif font -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    180deg,
+    #f6c1d1 0%,
+    #fff1dc 45%,
+    #cfe9f7 100%
+  );
+}
+
+/* BIG PINK BOX */
+.box {
+  width: 760px;
+  height: 380px;
+  background: linear-gradient(145deg, #f4a1c2, #fad1e3);
+  border-radius: 40px;
+  box-shadow:
+    0 45px 90px rgba(0,0,0,0.2),
+    0 0 60px rgba(255, 182, 193, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.35s ease;
+}
+
+.box:active {
+  transform: scale(0.97);
+}
+
+/* TEXT WRAPPER */
+.text {
+  font-family: 'Playfair Display', serif;
+  text-align: center;
+  color: #fffaf2;
+  text-shadow: 0 0 18px rgba(255, 220, 180, 0.9);
+}
+
+/* LINE STYLES */
+.line1 {
+  font-size: 72px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.line2 {
+  font-size: 64px;
+  font-weight: 700;
+  margin-top: 16px;
+  letter-spacing: 4px;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .box {
+    width: 92vw;
+    height: 260px;
+  }
+
+  .line1 {
+    font-size: 42px;
+  }
+
+  .line2 {
+    font-size: 38px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="box" onclick="typeText()">
+  <div class="text">
+    <div class="line1" id="line1"></div>
+    <div class="line2" id="line2"></div>
+  </div>
+</div>
+
+<script>
+const line1Text = "GOOD MORNING";
+const line2Text = "NONI 🌸";
+
+const line1El = document.getElementById("line1");
+const line2El = document.getElementById("line2");
+
+let i = 0;
+let j = 0;
+let started = false;
+
+function typeText() {
+  if (started) return;
+  started = true;
+
+  const typeLine1 = setInterval(() => {
+    if (i < line1Text.length) {
+      line1El.textContent += line1Text.charAt(i);
+      i++;
+    } else {
+      clearInterval(typeLine1);
+
+      setTimeout(() => {
+        const typeLine2 = setInterval(() => {
+          if (j < line2Text.length) {
+            line2El.textContent += line2Text.charAt(j);
+            j++;
+          } else {
+            clearInterval(typeLine2);
+          }
+        }, 140);
+      }, 300);
+    }
+  }, 110);
+}
+</script>
+
+</body>
+</html>

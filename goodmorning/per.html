@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Good Morning Noni 🦋</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  background: linear-gradient(to bottom, #89f7fe, #dbeafe);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Parisienne', cursive;
+}
+
+/* Butterfly */
+.butterfly {
+  font-size: 72px;
+  cursor: pointer;
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* Typed text */
+.message {
+  position: absolute;
+  font-size: 56px;
+  color: #1e40af;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  opacity: 0;
+  white-space: nowrap;
+}
+
+/* Floating items */
+.float {
+  position: absolute;
+  font-size: 22px;
+  animation: rise 5s linear forwards;
+}
+
+@keyframes rise {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-220px);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="butterfly" id="butterfly">🦋</div>
+<div class="message" id="message"></div>
+
+<script>
+const butterfly = document.getElementById("butterfly");
+const message = document.getElementById("message");
+const text = "Good Morning Noni 🦋";
+let index = 0;
+
+butterfly.addEventListener("click", () => {
+  // Hide butterfly
+  butterfly.style.opacity = "0";
+  butterfly.style.transform = "scale(0.5)";
+  setTimeout(() => butterfly.remove(), 800);
+
+  // Start typing text
+  message.style.opacity = "1";
+  typeText();
+
+  // Floating hearts & flowers
+  for (let i = 0; i < 18; i++) {
+    createFloat();
+  }
+});
+
+function typeText() {
+  if (index < text.length) {
+    message.innerHTML += text.charAt(index);
+    index++;
+    setTimeout(typeText, 120);
+  }
+}
+
+function createFloat() {
+  const el = document.createElement("div");
+  el.className = "float";
+  el.innerHTML = Math.random() > 0.5 ? "💙" : "🌸";
+
+  el.style.left = Math.random() * window.innerWidth + "px";
+  el.style.bottom = "0px";
+  el.style.fontSize = (18 + Math.random() * 22) + "px";
+
+  document.body.appendChild(el);
+
+  setTimeout(() => el.remove(), 5000);
+}
+</script>
+
+</body>
+</html>

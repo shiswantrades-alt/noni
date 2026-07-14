@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Will You Forgive Me, Nadin? 💕</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Dancing Script', cursive;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      background: linear-gradient(135deg, #FFB6C1, #DDA0DD);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+
+    /* Floating hearts background */
+    .heart {
+      position: fixed;
+      font-size: 20px;
+      opacity: 0.6;
+      animation: floatUp 10s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(100vh); }
+      to { transform: translateY(-10vh); }
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      transition: opacity 1s ease;
+    }
+
+    h1 {
+      font-size: clamp(42px, 7vw, 72px);
+      margin-bottom: 40px;
+      text-shadow: 0 0 15px rgba(255,255,255,0.7);
+    }
+
+    .buttons {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    button {
+      width: 140px;
+      height: 70px;
+      border-radius: 40px;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #yesBtn {
+      background: #4CAF50;
+      color: #fff;
+      box-shadow: 0 0 20px rgba(0,255,0,0.6);
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.1);
+    }
+
+    #noBtn {
+      background: #E53935;
+      color: #fff;
+      position: relative;
+    }
+
+    .tryAgain {
+      margin-top: 20px;
+      font-size: 24px;
+      animation: wiggle 0.5s infinite;
+      display: none;
+    }
+
+    @keyframes wiggle {
+      0% { transform: rotate(-3deg); }
+      50% { transform: rotate(3deg); }
+      100% { transform: rotate(-3deg); }
+    }
+
+    /* Confetti canvas */
+    canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Letter */
+    .letter {
+      position: fixed;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%) scale(0.1) rotate(-5deg);
+      width: 300px;
+      height: 400px;
+      background: #FDFD96;
+      color: #5b3b2e;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      opacity: 0;
+      z-index: 20;
+      cursor: pointer;
+      transition: transform 2s ease, opacity 1s ease;
+      overflow: hidden;
+    }
+
+    .letter.unfold {
+      transform: translateX(-50%) scale(1) rotate(0deg);
+      opacity: 1;
+    }
+
+    .letter h2 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+
+    .paragraph {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+      font-size: 20px;
+      margin: 10px 0;
+    }
+
+    .paragraph.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .photo {
+      margin-top: 15px;
+      width: 100%;
+      text-align: center;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 1s ease;
+    }
+
+    .photo.show {
+      opacity: 1;
+      transform: scale(1);
+      animation: pulse 2s infinite;
+    }
+
+    .photo img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 0 20px pink;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 15px pink; }
+      50% { box-shadow: 0 0 30px hotpink; }
+      100% { box-shadow: 0 0 15px pink; }
+    }
+
+    .restart {
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      background: rgba(255,255,255,0.3);
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="container" id="main">
+  <h1>Will You Forgive Me, Nadin? 💕</h1>
+  <div class="buttons">
+    <button id="yesBtn">Yes ❤️</button>
+    <button id="noBtn">No 😢</button>
+  </div>
+  <div class="tryAgain" id="tryAgain">Aww, please try again! 🥺💖</div>
+</div>
+
+<div class="letter" id="letter">
+  <h2 id="typewriter"></h2>
+
+  <div class="paragraph">I'm so sorry for my mistake. I never meant to hurt you.</div>
+  <div class="paragraph">You mean the world to me—your smile lights up my life.</div>
+  <div class="paragraph">I promise to listen better and cherish every moment.</div>
+  <div class="paragraph">Will you forgive me? I love you more than words. 💕</div>
+
+  <div class="photo">
+    <img src="mwah-cat-rose.gif" alt="Us">
+    <div>Forever yours 💖</div>
+  </div>
+</div>
+
+<button class="restart" onclick="location.reload()">Restart 💫</button>
+
+<script>
+  /* Floating hearts */
+  for (let i = 0; i < 30; i++) {
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.textContent = '💖';
+    h.style.left = Math.random() * 100 + 'vw';
+    h.style.animationDuration = 6 + Math.random() * 6 + 's';
+    h.style.fontSize = 16 + Math.random() * 24 + 'px';
+    document.body.appendChild(h);
+  }
+
+  /* No button chase */
+  const noBtn = document.getElementById('noBtn');
+  const tryAgain = document.getElementById('tryAgain');
+  let speed = 1;
+
+  noBtn.addEventListener('click', () => {
+    noBtn.style.position = 'fixed';
+    tryAgain.style.display = 'block';
+
+    function move() {
+      const x = Math.random() * 85;
+      const y = Math.random() * 85;
+      noBtn.style.left = x + 'vw';
+      noBtn.style.top = y + 'vh';
+      speed += 0.02;
+      setTimeout(move, 1000 / speed);
+    }
+    move();
+    noBtn.disabled = true;
+  });
+
+  /* Yes flow */
+  const yesBtn = document.getElementById('yesBtn');
+  const main = document.getElementById('main');
+  const letter = document.getElementById('letter');
+
+  yesBtn.addEventListener('click', () => {
+    startConfetti();
+    main.style.opacity = '0';
+
+    setTimeout(() => {
+      main.style.display = 'none';
+      letter.style.opacity = '1';
+      letter.classList.add('unfold');
+    }, 1000);
+  });
+
+  /* Letter interaction */
+  const typeEl = document.getElementById('typewriter');
+  const paragraphs = document.querySelectorAll('.paragraph');
+  const photo = document.querySelector('.photo');
+
+  letter.addEventListener('click', () => {
+    playMusic();
+    typeText("To: My dearest Nadin ❤️", 100);
+
+    paragraphs.forEach((p, i) => {
+      setTimeout(() => p.classList.add('show'), 1200 + i * 500);
+    });
+
+    setTimeout(() => photo.classList.add('show'), 3500);
+  }, { once: true });
+
+  function typeText(text, speed) {
+    let i = 0;
+    const interval = setInterval(() => {
+      typeEl.textContent += text.charAt(i);
+      i++;
+      if (i >= text.length) clearInterval(interval);
+    }, speed);
+  }
+
+  /* Confetti */
+  function startConfetti() {
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+    const particles = Array.from({ length: 80 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: 10 + Math.random() * 10,
+      d: Math.random() * 5,
+      s: Math.random() * 3 + 2,
+      emoji: ['💖','💕','❤️','💘'][Math.floor(Math.random()*4)]
+    }));
+
+    function draw() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particles.forEach(p => {
+        ctx.font = p.r + 'px serif';
+        ctx.fillText(p.emoji, p.x, p.y);
+        p.y += p.s;
+        if (p.y > canvas.height) p.y = -20;
+      });
+      requestAnimationFrame(draw);
+    }
+    draw();
+  }
+
+  /* Music */
+  function playMusic() {
+    const audio = new Audio('Her.mp3');
+    audio.loop = true;
+    audio.volume = 0.5;
+    audio.play();
+  }
+</script>
+
+</body>
+</html>

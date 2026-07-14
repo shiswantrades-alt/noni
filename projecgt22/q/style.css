@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    font-family: "Segoe UI", sans-serif;
+    background: #4a90e2;
+    transition: background 1.5s ease;
+    overflow: hidden;
+}
+
+body.pink {
+    background: #ff9acb;
+}
+
+body.final {
+    background: #ffd6e8;
+}
+
+#container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#sceneImg {
+    width: 220px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    transition: opacity 1s ease;
+}
+
+#card {
+    background: white;
+    padding: 30px 40px;
+    border-radius: 22px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+button {
+    margin-top: 20px;
+    padding: 12px 26px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    background: #ff6fae;
+    color: white;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.hidden {
+    display: none;
+}
+
+#gift {
+    font-size: 60px;
+    margin-top: 20px;
+    animation: pop 1s infinite alternate;
+}
+
+@keyframes pop {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+}
+
+/* Hearts animation */
+.heart {
+    position: absolute;
+    font-size: 22px;
+    animation: float 3s linear forwards;
+}
+
+@keyframes float {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-150px); }
+}
